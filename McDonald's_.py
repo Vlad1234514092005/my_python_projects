@@ -14,6 +14,21 @@ def remove_product(product, lst):
     if product in lst:
         lst.remove(product)
     return lst, all_products
+
+def print_order(order_list):
+    for i in order_list:
+        print(f"{i.name}: {i.cost}")
+
+
+def prepare_order(order_list, product, total_cost):
+    amount = int(input("Кількість продукту --> "))
+    product.cost = product.price * amount
+    total_cost += (product.price * amount)
+    order_list.append(product)
+    print_order(order_list)
+    print(f"Ваше замовлення буде коштувати вам {total_cost}")
+    return total_cost, order_list, amount
+
 class Product:
     def __init__(self, name, price, description, ingredients, nutritional_values, is_current_offer=False, amount=1):
         global current_offer
