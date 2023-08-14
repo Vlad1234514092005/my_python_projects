@@ -29,6 +29,53 @@ def prepare_order(order_list, product, total_cost):
     print(f"Ваше замовлення буде коштувати вам {total_cost}")
     return total_cost, order_list, amount
 
+
+# class Digit:
+#     @classmethod
+#     def __check_value(cls, value):
+#         return True if type(value) in (int, float) else False
+#
+#     def __set_name__(self, owner, name):
+#         self.name = '_' + name
+#
+#     def __get__(self, instance, owner):
+#         getattr(instance, self.name)
+#
+#     def __set__(self, instance, value):
+#         self.__check_value(value)
+#         setattr(instance, self.name, value)
+#
+#
+# class String:
+#     @classmethod
+#     def __check_value(cls, value):
+#         return True if type(value) == str else False
+#
+#     def __set_name__(self, owner, name):
+#         self.name = '_' + name
+#
+#     def __get__(self, instance, owner):
+#         getattr(instance, self.name)
+#
+#     def __set__(self, instance, value):
+#         setattr(instance, self.name, value)
+#
+#
+# class SetDictList:
+#     @classmethod
+#     def __check_value(cls, value):
+#         return True if type(value) in (set, dict, list) else False
+#
+#     def __set_name__(self, owner, name):
+#         self.name = '_' + name
+#
+#     def __get__(self, instance, owner):
+#         getattr(instance, self.name)
+#
+#     def __set__(self, instance, value):
+#         setattr(instance, self.name, value)
+
+
 class Product:
     def __init__(self, name, price, description, ingredients, nutritional_values, is_current_offer=False, amount=1):
         global current_offer
@@ -718,3 +765,98 @@ butter_croissant = Desserts('Круасан вершковий', 45, 'Відмі
                             ' Можна додати варення або Нутеллу.'
                             ' Для тих, хто любить солодкий сніданок.', [],
                              {'Енергія': '832 ккал', 'Жири': '10г', 'Насичені жирні кислоти': '6.5г', 'Цукор': '22г', 'Целюлоза': '1.7г', 'Білки': '4.5г', 'Сіль': '0.63г'})
+hamburger.add_product_()
+cheeseburger.add_product_()
+crispy_bacon_McWrap.add_product_()
+grilled_italian_McWrap.add_product_()
+single_big_tasty_chicken.add_product_()
+McChicken.add_product_()
+tasty_chicken.add_product_()
+chicken_burger.add_product_()
+chicken_McNuggets.add_product_()
+chicken_strips.add_product_()
+snack_wrap.add_product_()
+fried_cheese_fresh.add_product_()
+veggie_wrap.add_product_()
+veggie_salad.add_product_()
+veggie_burger.add_product_()
+crispy_chicken_salad.add_product_()
+grilled_chicken_salad.add_product_()
+garden_salad.add_product_()
+McShakerFries.add_product_()
+camembert.add_product_()
+french_fries.add_product_()
+cheese_king_sauce.add_product_()
+ketchup.add_product_()
+pommes_frites_sauce.add_product_()
+sweet_and_sour_sauce.add_product_()
+hellmann_s_tartar_sauce.add_product_()
+barbecue_sauce.add_product_()
+curry_sauce.add_product_()
+mustard_sauce.add_product_()
+lemon_chili.add_product_()
+caesar_grout.add_product_()
+cocktail_dressing.add_product_()
+yogurt_dressing.add_product_()
+cheese_dressing.add_product_()
+balsamic.add_product_()
+olive_oil.add_product_()
+pastry_chocolate_and_salted_caramel.add_product_()
+McFlurry_oreo.add_product_()
+McFlurry.add_product_()
+McSundae_caramel.add_product_()
+McSundae_chocolate.add_product_()
+McSundae_strawberry.add_product_()
+grand_McSundae_chocolate.add_product_()
+grand_McSundae_caramel.add_product_()
+grand_McSundae_strawberry.add_product_()
+ice_cream_in_cone.add_product_()
+milk_shake_with_vanilla_flavour.add_product_()
+milk_shake_with_strawberry_flavour.add_product_()
+milk_shake_with_chocolate_flavour.add_product_()
+shake_deluxe_with_vanilla_whipped_cream.add_product_()
+shake_deluxe_with_strawberry_whipped_cream.add_product_()
+shake_deluxe_with_whipped_cream_chocolate.add_product_()
+apple_pastry.add_product_()
+fruit_mix.add_product_()
+coca_cola.add_product_()
+fanta.add_product_()
+coca_cola_zero.add_product_()
+coca_cola_zero_cinnamon.add_product_()
+sprite.add_product_()
+lipton_ice_tea_lemon.add_product_()
+kitl_raspberry.add_product_()
+vinea.add_product_()
+soda_water.add_product_()
+orange_juice.add_product_()
+apple_juice.add_product_()
+pilsner_urquell.add_product_()
+still_water.add_product_()
+gently_sparkling_water.add_product_()
+espresso.add_product_()
+double_espresso.add_product_()
+coffee.add_product_()
+coffee_with_milk.add_product_()
+espresso_grande.add_product_()
+latte.add_product_()
+cappuccino.add_product_()
+Tea.add_product_()
+iced_coffee_with_ice_cream.add_product_()
+cheese_bagel_fresh_luchina.add_product_()
+egg_bagel.add_product_()
+pork_bagel.add_product_()
+Mc_Country_breakfast.add_product_()
+egg_McMuffin_fresh.add_product_()
+Mc_Muffin_with_egg.add_product_()
+pork_McMuffin_with_egg.add_product_()
+Mc_Muffin_with_egg_and_bacon.add_product_()
+scrambled_eggs_with_ham_and_cheese.add_product_()
+proper_breakfast.add_product_()
+chicken_McMuffin_fresh.add_product_()
+McMuffin_luchina.add_product_()
+pork_McMuffin_fresh.add_product_()
+toast_with_cheese.add_product_()
+toast_with_ham_and_cheese.add_product_()
+toast_with_ham_bacon_cheese.add_product_()
+pancakes.add_product_()
+butter_croissant.add_product_()
