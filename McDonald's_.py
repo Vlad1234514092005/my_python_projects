@@ -860,3 +860,40 @@ toast_with_ham_and_cheese.add_product_()
 toast_with_ham_bacon_cheese.add_product_()
 pancakes.add_product_()
 butter_croissant.add_product_()
+
+sauces = filter(lambda x: type(x) == SaucesAndDressings, all_products)
+sauce_names_list = []
+
+for i in sauces:
+    sauce_names_list.append(i.name)
+
+
+while order_status == False:
+    ordering = input("Що ви б хотіли замовити --> ")
+    for i in all_products:
+        if i.name == ordering:
+            if i.name in ('Макшакер Фрі', 'Курячі мак-наггетси', 'Курячі стріпси', 'Картопля фрі', 'Камамбер'):
+                sauce = input("Бажаєте соус? (y/n) ")
+                if sauce == 'y':
+                    for j in sauce_names_list:
+                        print(j, "\n")
+                    sauce_name = input("Оберіть будь-який запропонований соус безкоштовно --> ")
+                    i.name += f"+ {sauce_name}"
+            total_cost, your_order, amount = prepare_order(your_order, i, total_cost)
+            push = input('Прибрати цей предмет? (y/n) ')
+            if push == 'y':
+                while push == 'y':
+                    total_cost -= i.price * amount
+                    your_order.pop()
+                    print('Цей предмет прибранний')
+                    print_order(your_order)
+                    print(f"Ваше замовлення буде коштувати вам {total_cost}")
+                    push = input('Прибрати цей предмет? (y/n) ')
+                    if push == 'n':
+                        break
+            is_over = input("Ви б хотіли б додати щось? (y/n) ")
+            if is_over == 'n':
+                print(f"Ваше замовлення буде коштувати вам {total_cost}")
+                print("Дякуємо за замовлення в McDonald's!")
+                order_status = True
+                break
