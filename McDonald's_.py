@@ -1,19 +1,19 @@
-def add_product(product, lst):
+def add_product(product, certain_type_product_list):
     global all_products
     if product not in all_products:
         all_products.append(product)
-    if product not in lst:
-        lst.append(product)
-    return lst, all_products
+    if product not in certain_type_product_list:
+        certain_type_product_list.append(product)
+    return certain_type_product_list, all_products
 
 
-def remove_product(product, lst):
+def remove_product(product, certain_type_product_list):
     global all_products
     if product in all_products:
         all_products.remove(product)
-    if product in lst:
-        lst.remove(product)
-    return lst, all_products
+    if product in certain_type_product_list:
+        certain_type_product_list.remove(product)
+    return certain_type_product_list, all_products
 
 def print_order(order_list):
     for i in order_list:
@@ -30,62 +30,70 @@ def prepare_order(order_list, product, total_cost):
     return total_cost, order_list, amount
 
 
-# class Digit:
-#     @classmethod
-#     def __check_value(cls, value):
-#         return True if type(value) in (int, float) else False
-#
-#     def __set_name__(self, owner, name):
-#         self.name = '_' + name
-#
-#     def __get__(self, instance, owner):
-#         getattr(instance, self.name)
-#
-#     def __set__(self, instance, value):
-#         self.__check_value(value)
-#         setattr(instance, self.name, value)
-#
-#
-# class String:
-#     @classmethod
-#     def __check_value(cls, value):
-#         return True if type(value) == str else False
-#
-#     def __set_name__(self, owner, name):
-#         self.name = '_' + name
-#
-#     def __get__(self, instance, owner):
-#         getattr(instance, self.name)
-#
-#     def __set__(self, instance, value):
-#         setattr(instance, self.name, value)
-#
-#
-# class SetDictList:
-#     @classmethod
-#     def __check_value(cls, value):
-#         return True if type(value) in (set, dict, list) else False
-#
-#     def __set_name__(self, owner, name):
-#         self.name = '_' + name
-#
-#     def __get__(self, instance, owner):
-#         getattr(instance, self.name)
-#
-#     def __set__(self, instance, value):
-#         setattr(instance, self.name, value)
+class Number:
+    def __set_name__(self, owner, name):
+        self.name = '_' + name
+
+    def __get__(self, instance, owner):
+        getattr(instance, self.name)
+
+    def __set__(self, instance, value):
+        if type(value) in (int, float):
+            setattr(instance, self.name, value)
+
+
+class String:
+    def __set_name__(self, owner, name):
+        self.name = '_' + name
+
+    def __get__(self, instance, owner):
+        getattr(instance, self.name)
+
+    def __set__(self, instance, value):
+        if type(value) == str:
+            setattr(instance, self.name, value)
+
+
+class Dict:
+    def __set_name__(self, owner, name):
+        self.name = '_' + name
+
+    def __get__(self, instance, owner):
+        getattr(instance, self.name)
+
+    def __set__(self, instance, value):
+        if type(value) == dict:
+            setattr(instance, self.name, value)
+
+
+class List:
+    def __set_name__(self, owner, name):
+        self.name = '_' + name
+
+    def __get__(self, instance, owner):
+        getattr(instance, self.name)
+
+    def __set__(self, instance, value):
+        if type(value) == list:
+            setattr(instance, self.name, value)
 
 
 class Product:
+    name = String()
+    price = Number()
+    description = String()
+    ingredients = List()
+    nutritional_values = Dict()
+
     def __init__(self, name, price, description, ingredients, nutritional_values, is_current_offer=False, amount=1):
         global current_offer
-        self._name = name
-        self._price = price
-        self._description = description
-        self._ingredients = ingredients
-        self._nutritional_values = nutritional_values
-        self._current_offer = is_current_offer
-        self._amount = amount
+        self.name = name
+        self.price = price
+        self.description = description
+        self.ingredients = ingredients
+        self.nutritional_values = nutritional_values
+        self.current_offer = is_current_offer
+        self.amount = amount
 
     def to_current_offer(self):
         if not self.current_offer:
@@ -98,56 +106,11 @@ class Product:
             current_offer.remove(self)
 
     def show(self):
-        print(f"Name: {self._name} \nPrice: {self._price} \nDescription: {self._description} \nIngredients: {self._ingredients} \nNutritial values: {self._nutritional_values} \nCurrent offer: {self._current_offer}")
-
-    @property
-    def name(self):
-        return self._name
-
-    @name.setter
-    def name(self, value):
-        if type(value) == str:
-            self._name = value
-
-    @property
-    def price(self):
-        return self._price
-
-    @price.setter
-    def price(self, value):
-        if type(value) in (int, float):
-            self._price = value
-
-    @property
-    def description(self):
-        return self._description
-
-    @description.setter
-    def description(self, value):
-        if type(value) == str:
-            self._description = value
-
-    @property
-    def ingredients(self):
-        return self._ingredients
-
-    @ingredients.setter
-    def ingredients(self, value):
-        if type(value) == str:
-            self._ingredients = value
-
-    @property
-    def nutritional_values(self):
-        return self._nutritional_values
-
-    @nutritional_values.setter
-    def nutritional_values(self, value):
-        if type(value) == type(self):
-            self._nutritional_values = value
+        print(f"Name: {self.name} \nPrice: {self.price} \nDescription: {self.description} \nIngredients: {self.ingredients} \nNutritial values: {self.nutritional_values} \nCurrent offer: {self.current_offer}")
 
     @property
     def is_current_offer(self):
-        return self._description
+        return self.description
 
     @is_current_offer.setter
     def is_current_offer(self, value):
@@ -167,6 +130,7 @@ class BeefBurgers(Product):
     def __init__(self, name, price, description, ingredients, nutritional_values, is_current_offer=False, amount=1):
         super().__init__(name, price, description,  ingredients, nutritional_values, is_current_offer, amount)
         self._product_list = []
+        add_product(self, self._product_list)
 
     def add_product_(self):
         if self not in self._product_list and type(self) == BeefBurgers:
@@ -181,6 +145,8 @@ class Chicken(Product):
     def __init__(self, name, price, description, ingredients, nutritional_values, is_current_offer=False, amount=1):
         super().__init__(name, price, description, ingredients, nutritional_values, is_current_offer, amount)
         self._product_list = []
+        add_product(self, self._product_list)
+
 
     def add_product_(self):
         if self not in self._product_list and type(self) == Chicken:
@@ -195,6 +161,7 @@ class Veggie(Product):
     def __init__(self, name, price, description, ingredients, nutritional_values, is_current_offer=False, amount=1):
         super().__init__(name, price, description, ingredients, nutritional_values, is_current_offer, amount)
         self._product_list = []
+        add_product(self, self._product_list)
 
     def add_product_(self):
         if self not in self._product_list and type(self) == Veggie:
@@ -209,6 +176,7 @@ class Salads(Product):
     def __init__(self, name, price, description, ingredients, nutritional_values, is_current_offer=False, amount=1):
         super().__init__(name, price, description, ingredients, nutritional_values, is_current_offer, amount)
         self._product_list = []
+        add_product(self, self._product_list)
 
     def add_product_(self):
         if self not in self._product_list and type(self) == Salads:
@@ -223,6 +191,7 @@ class Attachments(Product):
     def __init__(self, name, price, description, ingredients, nutritional_values, is_current_offer=False, amount=1):
         super().__init__(name, price, description, ingredients, nutritional_values, is_current_offer, amount)
         self._product_list = []
+        add_product(self, self._product_list)
 
     def add_product_(self):
         if self not in self._product_list and type(self) == Attachments:
@@ -237,6 +206,7 @@ class SaucesAndDressings(Product):
     def __init__(self, name, price, description, ingredients, nutritional_values, is_current_offer=False, amount=1):
         super().__init__(name, price, description, ingredients, nutritional_values, is_current_offer, amount)
         self._product_list = []
+        add_product(self, self._product_list)
 
     def add_product_(self):
         if self not in self._product_list and type(self) == SaucesAndDressings:
@@ -251,6 +221,7 @@ class Desserts(Product):
     def __init__(self, name, price, description, ingredients, nutritional_values, is_current_offer=False, amount=1):
         super().__init__(name, price, description, ingredients, nutritional_values, is_current_offer, amount)
         self._product_list = []
+        add_product(self, self._product_list)
 
     def add_product_(self):
         if self not in self._product_list and type(self) == Desserts:
@@ -267,6 +238,7 @@ class Beverages(Product):
         if type(hot_or_cold) == str and hot_or_cold == 'Охолоджений' or hot_or_cold == 'Гарячий' or hot_or_cold == 'Холодний':
             self._hot_or_cold = hot_or_cold
         self._product_list = []
+        add_product(self, self._product_list)
 
     def add_product_(self):
         if self not in self._product_list and type(self) == Beverages:
@@ -288,6 +260,7 @@ class Breakfast(Product):
         if type(type_) in (Attachments, Desserts, str) and type_ in ('Бублики і бургери', 'Макмаффіни і тости'):
             self._type = type_
         self._product_list = []
+        add_product(self, self._product_list)
 
     def add_product_(self):
         if self not in self._product_list:
@@ -321,6 +294,7 @@ class McCafe(Product):
         if kind in ('Поточна пропозиція', 'Пропозиція McCafe в McDonald\'s', 'Пропозиція в McCafe'):
             self._kind = kind
         self._product_list = []
+        add_product(self, self._product_list)
 
     def add_product_(self):
         if self not in self._product_list:
@@ -344,6 +318,7 @@ class HappyMeal(Product):
     def __init__(self, name, price, description, ingredients, nutritional_values, is_current_offer=False, amount=1):
         super().__init__(name, price, description, ingredients, nutritional_values, is_current_offer, amount)
         self._product_list = []
+        add_product(self, self._product_list)
 
     def add_product_(self):
         if self not in self._product_list:
@@ -765,101 +740,7 @@ butter_croissant = Desserts('Круасан вершковий', 45, 'Відмі
                             ' Можна додати варення або Нутеллу.'
                             ' Для тих, хто любить солодкий сніданок.', [],
                              {'Енергія': '832 ккал', 'Жири': '10г', 'Насичені жирні кислоти': '6.5г', 'Цукор': '22г', 'Целюлоза': '1.7г', 'Білки': '4.5г', 'Сіль': '0.63г'})
-hamburger.add_product_()
-cheeseburger.add_product_()
-crispy_bacon_McWrap.add_product_()
-grilled_italian_McWrap.add_product_()
-single_big_tasty_chicken.add_product_()
-McChicken.add_product_()
-tasty_chicken.add_product_()
-chicken_burger.add_product_()
-chicken_McNuggets.add_product_()
-chicken_strips.add_product_()
-snack_wrap.add_product_()
-fried_cheese_fresh.add_product_()
-veggie_wrap.add_product_()
-veggie_salad.add_product_()
-veggie_burger.add_product_()
-crispy_chicken_salad.add_product_()
-grilled_chicken_salad.add_product_()
-garden_salad.add_product_()
-McShakerFries.add_product_()
-camembert.add_product_()
-french_fries.add_product_()
-cheese_king_sauce.add_product_()
-ketchup.add_product_()
-pommes_frites_sauce.add_product_()
-sweet_and_sour_sauce.add_product_()
-hellmann_s_tartar_sauce.add_product_()
-barbecue_sauce.add_product_()
-curry_sauce.add_product_()
-mustard_sauce.add_product_()
-lemon_chili.add_product_()
-caesar_grout.add_product_()
-cocktail_dressing.add_product_()
-yogurt_dressing.add_product_()
-cheese_dressing.add_product_()
-balsamic.add_product_()
-olive_oil.add_product_()
-pastry_chocolate_and_salted_caramel.add_product_()
-McFlurry_oreo.add_product_()
-McFlurry.add_product_()
-McSundae_caramel.add_product_()
-McSundae_chocolate.add_product_()
-McSundae_strawberry.add_product_()
-grand_McSundae_chocolate.add_product_()
-grand_McSundae_caramel.add_product_()
-grand_McSundae_strawberry.add_product_()
-ice_cream_in_cone.add_product_()
-milk_shake_with_vanilla_flavour.add_product_()
-milk_shake_with_strawberry_flavour.add_product_()
-milk_shake_with_chocolate_flavour.add_product_()
-shake_deluxe_with_vanilla_whipped_cream.add_product_()
-shake_deluxe_with_strawberry_whipped_cream.add_product_()
-shake_deluxe_with_whipped_cream_chocolate.add_product_()
-apple_pastry.add_product_()
-fruit_mix.add_product_()
-coca_cola.add_product_()
-fanta.add_product_()
-coca_cola_zero.add_product_()
-coca_cola_zero_cinnamon.add_product_()
-sprite.add_product_()
-lipton_ice_tea_lemon.add_product_()
-kitl_raspberry.add_product_()
-vinea.add_product_()
-soda_water.add_product_()
-orange_juice.add_product_()
-apple_juice.add_product_()
-pilsner_urquell.add_product_()
-still_water.add_product_()
-gently_sparkling_water.add_product_()
-espresso.add_product_()
-double_espresso.add_product_()
-coffee.add_product_()
-coffee_with_milk.add_product_()
-espresso_grande.add_product_()
-latte.add_product_()
-cappuccino.add_product_()
-Tea.add_product_()
-iced_coffee_with_ice_cream.add_product_()
-cheese_bagel_fresh_luchina.add_product_()
-egg_bagel.add_product_()
-pork_bagel.add_product_()
-Mc_Country_breakfast.add_product_()
-egg_McMuffin_fresh.add_product_()
-Mc_Muffin_with_egg.add_product_()
-pork_McMuffin_with_egg.add_product_()
-Mc_Muffin_with_egg_and_bacon.add_product_()
-scrambled_eggs_with_ham_and_cheese.add_product_()
-proper_breakfast.add_product_()
-chicken_McMuffin_fresh.add_product_()
-McMuffin_luchina.add_product_()
-pork_McMuffin_fresh.add_product_()
-toast_with_cheese.add_product_()
-toast_with_ham_and_cheese.add_product_()
-toast_with_ham_bacon_cheese.add_product_()
-pancakes.add_product_()
-butter_croissant.add_product_()
+
 
 sauces = filter(lambda x: type(x) == SaucesAndDressings, all_products)
 sauce_names_list = []
