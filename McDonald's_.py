@@ -78,12 +78,16 @@ class List:
             setattr(instance, self.name, value)
 
 
-class Product:
+from abc import ABC
+
+
+class Product(ABC):
     name = String()
     price = Number()
     description = String()
     ingredients = List()
     nutritional_values = Dict()
+    amount = Number()
 
     def __init__(self, name, price, description, ingredients, nutritional_values, is_current_offer=False, amount=1):
         global current_offer
@@ -115,15 +119,6 @@ class Product:
     @is_current_offer.setter
     def is_current_offer(self, value):
         self._is_current_offer = value
-
-    @property
-    def amount(self):
-        return self._amount
-
-    @amount.setter
-    def amount(self, value):
-        if type(value) == str:
-            self._amount = value
 
 
 class BeefBurgers(Product):
